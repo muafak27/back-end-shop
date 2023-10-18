@@ -3,7 +3,7 @@ const deliveryAddressController = require('./controller')
 const {police_check} = require('../../middleware/index')
 
 router.post('/delivery-address', 
-    police_check('create', 'DeliveryAddresses'),
+    // police_check('create', 'DeliveryAddresses'),
     deliveryAddressController.store
 )
 router.put('/delivery-address/:id', deliveryAddressController.update)

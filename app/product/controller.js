@@ -80,7 +80,7 @@ const store = async(req, res, next) => {
 // get all data
 const index = async(req, res, next) => {
     try {
-        let {skip = 0, limit = 10, q = ',', category = '', tags = []} = req.query
+        let {skip = 0, limit = 10, q = '', category = '', tags = []} = req.query
         let criteria = {}
         if(q.length){
             criteria= {
@@ -95,12 +95,12 @@ const index = async(req, res, next) => {
             }
         }
         if(tags.length){
-            let tagsResult = await Tag.find({name: {$in: tags}})
+            let tagsResult = await Tag.find({name: {$regex: `${tags}`, $options: 'i'}})
             if(tagsResult.length > 0){
                 criteria = {...criteria, tags: {$in: tagsResult.map(tag => tag._id)}}
             }
         }
-        let count = await Product.find().countDocuments()
+        let count = await Product.find(criteria).countDocuments()
         let product = await Product
         .find(criteria)
         .skip(parseInt(skip))

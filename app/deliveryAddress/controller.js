@@ -26,7 +26,7 @@ const update = async(req, res, next) => {
     try {
         let {_id, ...payload} = req.body
         let {id} = req.params
-        let address = DeliveryAddress.findById(id)
+        let address = await DeliveryAddress.findById(id)
         let subjectAddress = subject('DeliveryAddress', {...address, user_id: address.user})
         let policy = await PolicyFor(req.user)
         if(!policy.can('update', subjectAddress)) {
